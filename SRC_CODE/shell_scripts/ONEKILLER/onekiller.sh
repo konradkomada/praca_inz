@@ -1,6 +1,15 @@
 #!/bin/bash
-#uruchamiac z crona co minute
-#np: * * * * * root /var/scripts/root/shellkiller.sh > /dev/null 2>&1
+# ------------------------------------------------------------------
+#   Autor: Konrad Komada
+#          onekiller.sh
+#          Skrypt do zabijania procesów np: php-fpm, które przekraczają limit użycia CPU
+#          http://konradkomada.pl
+# ------------------------------------------------------------------
+
+#uruchamiac co minute z crona: /etc/crontab
+#* * * * * root /root/scripts/onekiller.sh > /dev/null 2>&1
+
+# --- Option processing --------------------------------------------
 file1=/tmp/onekiller_1.tmp
 file2=/tmp/onekiller_2.tmp
 procesy="php-fpm"
