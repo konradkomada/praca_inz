@@ -1,0 +1,25 @@
+#* * * * *      root /root/scripts/topdump.sh  > /dev/null 2>&1
+#0 0 * * *      root /usr/bin/find /root/TOPDUMP/ -type f -mtime +3 -delete > /dev/null 2>&1
+
+0 0 * * *       root /usr/sbin/ntpdate pool.ntp.org > /dev/null 2>&1
+
+0 1  * * *      root /usr/sbin/logwatch | mail -s "Logwatch for serwer (Linux)" email@admina.pl
+0 0 * * *       root /usr/sbin/logrotate /etc/logrotate.conf
+
+15 5 * * *      root /usr/bin/find /home/ -mindepth 4 -maxdepth 4 -type d -name logs -exec chown root {} \; > /dev/null 2>&1
+20 5 * * *      root /usr/bin/find /home/ -mindepth 4 -maxdepth 4 -type d -name logs -exec chmod 700 {} \; > /dev/null 2>&1
+
+#firewall
+0 * * * *	root /root/scripts/firewall/autofail2ban.sh
+5 * * * *	root /root/scripts/firewall/ipset.sh
+1 * * * *	root /root/scripts/rsync_firewall_secondary.sh
+#* * * * *	root echo test | mail -s test xunix@xunix.pl
+
+#sprawdzajace
+0,30 * * * * root /root/scripts/named-checkconf.sh
+0/5 * * * * root /root/scripts/pingtest-secondary.sh
+0/5 * * * * root /root/scripts/pingtest-ipv6_home_router.sh
+0/5 * * * * root /root/scripts/pingtest-ipv6_home_net.sh
+* * * * * root /root/scripts/onekiller.sh
+
+
